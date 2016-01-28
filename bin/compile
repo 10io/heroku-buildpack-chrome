@@ -32,7 +32,7 @@ apt-get $APT_OPTIONS update | indent
 
 topic "Fetching .debs for xvfb and unzip"
 
-apt-get $APT_OPTIONS -y -d install x11-xkb-utils libxkbfile1 xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic libxfont1 xvfb unzip | indent
+apt-get $APT_OPTIONS -y -d install x11-xkb-utils libxkbfile-dev xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic libxfont1 xvfb unzip | indent
 
 topic "Fetching google chrome"
 CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
