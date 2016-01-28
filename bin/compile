@@ -32,7 +32,7 @@ apt-get $APT_OPTIONS update | indent
 
 topic "Fetching .debs for xvfb and unzip"
 
-apt-get $APT_OPTIONS -y -d install x11-xkb-utils libxkbfile-dev xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic libxfont1 xvfb unzip | indent
+apt-get $APT_OPTIONS -y -d install x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic libxfont1 xvfb unzip | indent
 
 topic "Fetching google chrome"
 CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
@@ -81,3 +81,23 @@ echo 'export LD_LIBRARY_PATH=".apt/usr/lib:\$LD_LIBRARY_PATH"'>> $PROFILE_PATH
 echo 'export INCLUDE_PATH=".apt/usr/include:\$INCLUDE_PATH"'>> $PROFILE_PATH
 echo 'export CPATH="\$INCLUDE_PATH"'>> $PROFILE_PATH
 echo 'export CPPPATH="\$INCLUDE_PATH"'>> $PROFILE_PATH
+
+topic "Writing profile script"
+mkdir -p $BUILD_DIR/.profile.d
+cat <<EOF >$BUILD_DIR/.profile.d/000_chrome.sh
+export PATH="\$HOME/.apt/usr/bin:.apt/usr/bin:vendor/chromedriver/bin:\$PATH"
+export LD_LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LD_LIBRARY_PATH"
+export LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LIBRARY_PATH"
+export INCLUDE_PATH="\$HOME/.apt/usr/include:\$INCLUDE_PATH"
+export CPATH="\$INCLUDE_PATH"
+export CPPPATH="\$INCLUDE_PATH"
+export PKG_CONFIG_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:\$HOME/.apt/usr/lib/i386-linux-gnu/pkgconfig:\$HOME/.apt/usr/lib/pkgconfig:\$PKG_CONFIG_PATH"
+EOF
+
+export PATH="$BUILD_DIR/.apt/usr/bin:vendor/chromedriver/bin:$PATH"
+export LD_LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:$LD_LIBRARY_PATH"
+export LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:$LIBRARY_PATH"
+export INCLUDE_PATH="$BUILD_DIR/.apt/usr/include:$INCLUDE_PATH"
+export CPATH="$INCLUDE_PATH"
+export CPPPATH="$INCLUDE_PATH"
+export PKG_CONFIG_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu/pkgconfig:$BUILD_DIR/.apt/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
