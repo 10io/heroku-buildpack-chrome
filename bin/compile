@@ -51,7 +51,7 @@ export PATH="$BUILD_DIR/vendor/chromedriver/bin":$PATH
 
 chromedriver_url="http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip"
 curl $chromedriver_url -s -o "$BUILD_DIR/vendor/chromedriver/chromedriver.zip"
-unzip "$BUILD_DIR/vendor/chromedriver/chromedriver.zip"
+unzip "$BUILD_DIR/vendor/chromedriver/chromedriver.zip" -d "$BUILD_DIR/vendor/chromedriver"
 rm "$BUILD_DIR/vendor/chromedriver/chromedriver.zip"
 mv "$BUILD_DIR/vendor/chromedriver/chromedriver" "$BUILD_DIR/vendor/chromedriver/bin"
 
