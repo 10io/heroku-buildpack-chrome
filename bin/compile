@@ -47,6 +47,7 @@ done
 
 cd $BUILD_DIR/.apt/usr/bin
 ln -s ../../opt/google/chrome/google-chrome google-chrome
+ln -s ../../opt/google/chrome/google-chrome /usr/bin/google-chrome
 
 topic "Downloading and installing ChromeDriver to ${BUILD_DIR}"
 mkdir -p "$BUILD_DIR/vendor/chromedriver/"
