@@ -73,15 +73,6 @@ export PATH="$PATH:$1/.apt/usr/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$1/.apt/usr/lib:$1/.apt/usr/lib/x86_64-linux-gnu"
 find $1/.apt/usr/share/fonts/X11 -type d | xargs $1/.apt/usr/bin/mkfontdir
 
-topic "exporting PATH and LIBRARY_PATH"
-PROFILE_PATH="$BUILD_DIR/.profile.d/chrome.sh"
-mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH=".apt/usr/bin:vendor/chromedriver/bin:$PATH"'>> $PROFILE_PATH
-echo 'export LD_LIBRARY_PATH=".apt/usr/lib:\$LD_LIBRARY_PATH"'>> $PROFILE_PATH
-echo 'export INCLUDE_PATH=".apt/usr/include:\$INCLUDE_PATH"'>> $PROFILE_PATH
-echo 'export CPATH="\$INCLUDE_PATH"'>> $PROFILE_PATH
-echo 'export CPPPATH="\$INCLUDE_PATH"'>> $PROFILE_PATH
-
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/000_chrome.sh
