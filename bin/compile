@@ -45,6 +45,9 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
 
+cd $BUILD_DIR/.apt/usr/bin
+ln -s ../../opt/google/chrome/google-chrome google-chrome
+
 topic "Downloading and installing ChromeDriver to ${BUILD_DIR}"
 mkdir -p "$BUILD_DIR/vendor/chromedriver/"
 mkdir -p "$BUILD_DIR/vendor/chromedriver/bin"
@@ -76,7 +79,7 @@ find $1/.apt/usr/share/fonts/X11 -type d | xargs $1/.apt/usr/bin/mkfontdir
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/000_chrome.sh
-export PATH="\$HOME/.apt/usr/bin:.apt/usr/bin:vendor/chromedriver/bin:.apt/opt/google/chrome:\$PATH"
+export PATH="\$HOME/.apt/usr/bin:.apt/usr/bin:vendor/chromedriver/bin:\$PATH"
 export LD_LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LD_LIBRARY_PATH"
 export LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LIBRARY_PATH"
 export INCLUDE_PATH="\$HOME/.apt/usr/include:\$INCLUDE_PATH"
