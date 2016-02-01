@@ -31,7 +31,7 @@ topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
 topic "Fetching .debs"
-apt-get $APT_OPTIONS -y -d install xvfb | indent
+apt-get $APT_OPTIONS -y -d install xvfb libxss1 | indent
 
 topic "Fetching google chrome"
 CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
