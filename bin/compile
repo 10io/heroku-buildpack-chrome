@@ -30,9 +30,8 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
-topic "Fetching .debs for xvfb and unzip"
-
-apt-get $APT_OPTIONS -y -d install x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic libxfont1 xvfb unzip | indent
+topic "Fetching .debs"
+apt-get $APT_OPTIONS -y -d install xvfb | indent
 
 topic "Fetching google chrome"
 CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
@@ -40,15 +39,13 @@ curl $CHROME_URL -s -o $APT_CACHE_DIR/archives/google-chrome-stable_current_amd6
 
 mkdir -p $BUILD_DIR/.apt
 
+topic "Installing debs"
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
 
-cd $BUILD_DIR/.apt/usr/bin
-ln -s ../../opt/google/chrome/google-chrome google-chrome
-
-topic "fixing Xvfb fonts"
+topic "Fixing Xvfb fonts"
 # symlink libs to where Xvfb searches
 ln -s /lib/x86_64-linux-gnu/libudev.so.1 $1/.apt/usr/lib/libudev.so.0
 ln -s /app/.apt/usr/lib/x86_64-linux-gnu/libXfont.so.1 $1/.apt/usr/lib/libXfont.so.1
